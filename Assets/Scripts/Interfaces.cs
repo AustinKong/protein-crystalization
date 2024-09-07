@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 
-// Something that can be stored
-public interface IStorable {
-    void Store();
-    void Retrieve();
+public interface ITransformable {
+    void Consume();
 }
 
-// Inventory that stores IStorable(s)
-public interface IInventory {
-    void AddToInventory(IStorable item);
-    void RemoveFromInventory(IStorable item);
-    IStorable[] GetInventory();
+public interface ITransformer {
+    Interactable Accept(ITransformable input);
+}
+
+public interface IInteractable {
+    void Interact();
+}
+
+public interface IDraggable {
+    // Optional methods for drag interactions
+    void OnBeginDrag();
+    void OnDrag();
+    void OnEndDrag();
 }
