@@ -25,6 +25,8 @@ public class Toaster : Interactable
             {
                 StartCoroutine(Toast());
                 return null;
+            } else {
+                return this;
             }
         }
 
@@ -44,5 +46,6 @@ public class Toaster : Interactable
         Instantiate(toastPrefab, transform.position + Vector3.up, Quaternion.identity).GetComponent<Rigidbody2D>().AddForce(Vector2.up * 4, ForceMode2D.Impulse);
         yield return new WaitForSeconds(0.3f);
         Instantiate(toastPrefab, transform.position + Vector3.up, Quaternion.identity).GetComponent<Rigidbody2D>().AddForce(Vector2.up * 4, ForceMode2D.Impulse);
+        breadCount = 0;
     }
 }

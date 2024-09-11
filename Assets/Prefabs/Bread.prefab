@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2783143158702572859}
   - component: {fileID: 178302959563082643}
   - component: {fileID: 919786136734093152}
-  - component: {fileID: 8413050551090430462}
+  - component: {fileID: 712237107678390362}
   m_Layer: 7
   m_Name: Bread
   m_TagString: Untagged
@@ -107,7 +107,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.95179796, y: 0.5127839}
   m_EdgeRadius: 0
---- !u!114 &8413050551090430462
+--- !u!114 &712237107678390362
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

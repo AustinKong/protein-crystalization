@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class InteractionManager : MonoBehaviour
 {
+    public static InteractionManager Instance { get; private set; }
+
     private Camera mainCamera;
     private const float INTERACTION_RADIUS = 1.1f;
 
     private List<Interactable> nearbyInteractables = new List<Interactable>();
-    private Interactable heldItem;
+    public Interactable heldItem = null;
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
 
     private void Start()
     {
@@ -18,7 +26,7 @@ public class InteractionManager : MonoBehaviour
     private void Update() {
         // Must be in this order
         ClearHighlights();
-        GetNearbyInteractables(2);
+        GetNearbyInteractables(HasHeldItem() ? 2 : 1);
         HighlightInteractables();
 
         MoveHeldItem();
@@ -95,6 +103,14 @@ public class InteractionManager : MonoBehaviour
         {
             interactable.SetHighlight(true);
         }
+    }
+
+    public void SetHeldItem(Interactable item) {
+        heldItem = item;
+    }
+
+    public bool HasHeldItem() {
+        return heldItem != null;
     }
 
     private void OnDrawGizmos()

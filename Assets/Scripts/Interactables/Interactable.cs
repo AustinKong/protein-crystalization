@@ -1,26 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using OutlineFx;
 
 public abstract class Interactable : MonoBehaviour
 {
     protected Rigidbody2D rb;
     private SpriteRenderer sr;
+    private Outline outlineScript;
 
     [SerializeField]
     private new string name;
     private bool isHighlighted = false;
 
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        outlineScript = transform.GetChild(0).gameObject.AddComponent<OutlineFx.OutlineFx>();
+        outlineScript.enabled = false;
     }
 
     public void SetHighlight(bool highlight) {
         if (isHighlighted != highlight) {
             isHighlighted = highlight;
-            sr.color = isHighlighted ? Color.red : Color.white;
+            outlineScript.enabled = highlight;
         }
     }
 
