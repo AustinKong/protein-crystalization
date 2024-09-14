@@ -36,9 +36,14 @@ public class InteractionManager : MonoBehaviour
     private void ManageInteraction() {
         if (Input.GetMouseButtonDown(0)) {
             // Drop held item if there is nothing nearby
-            if (nearbyInteractables.Count == 1 && heldItem != null) {
-                heldItem = null;
-                return;
+            if (heldItem != null) {
+                if (nearbyInteractables.Count == 1) {
+                    heldItem = null;
+                    return;
+                } else if (nearbyInteractables.Count > 1 && !nearbyInteractables[1].CanInteract(heldItem).canInteract) {
+                    heldItem = null;
+                    return;
+                }
             }
 
             if (nearbyInteractables.Count > 0) {
@@ -99,9 +104,19 @@ public class InteractionManager : MonoBehaviour
     // Highlights N nearest interactables
     private void HighlightInteractables()
     {
+        bool hasHighlighted = false;
         foreach (Interactable interactable in nearbyInteractables)
         {
-            interactable.SetHighlight(true);
+            InteractionCheck interactionCheck = interactable.CanInteract(heldItem);
+            if (interactionCheck.canInteract) {
+                hasHighlighted = true;
+                interactable.SetHighlight(true);
+                TooltipManager.Instance.ShowTooltip(interactionCheck.description);
+            }
+        }
+        if (!hasHighlighted) TooltipManager.Instance.HideTooltip();
+        if (heldItem != null && !hasHighlighted) {
+            TooltipManager.Instance.ShowTooltip("Drop " + heldItem.name);
         }
     }
 

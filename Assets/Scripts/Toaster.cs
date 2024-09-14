@@ -33,6 +33,16 @@ public class Toaster : Interactable
         return other;
     }
 
+    public override InteractionCheck CanInteract(Interactable other)
+    {
+        if (other == null && breadCount < 2) return new InteractionCheck(true, "Pick up toaster");
+
+        if (other != null && other.Is("Bread") && breadCount < 2) return new InteractionCheck(true, "Put bread into toaster");
+        if (breadCount == 2 && !isToasting && other == null) return new InteractionCheck(true, "Turn on toaster");
+
+        return new InteractionCheck(false, "");
+    }
+
     private IEnumerator Toast() {
         isToasting = true;
         float time = 0;

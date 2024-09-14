@@ -24,4 +24,15 @@ public class SimpleTransfomer : Interactable
 
         return other;
     }
+
+    public override InteractionCheck CanInteract(Interactable other)
+    {
+        if (other == null) return new InteractionCheck(true, "Pick up " + this.name);
+
+        foreach (TransformationRule rule in transformationRules)
+        {
+            if (other != null && other.Is(rule.requiredItemName)) return new InteractionCheck(true, "Transform " + other.name + " into " + rule.transformedItem.name);
+        }
+        return new InteractionCheck(false, "");
+    }
 }
